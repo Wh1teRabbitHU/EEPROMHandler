@@ -1,6 +1,5 @@
-
-# Node specific
-node_modules/
+.gradle
+.idea
 
 # Generated assets
-generated/
+build/
