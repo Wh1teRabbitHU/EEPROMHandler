@@ -12,8 +12,60 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	jSerialCommVersion = "2.6.2"
+
+	// Logging
+	slf4jVersion = "1.7.25"
+	logbackVersion = "1.2.3"
+
+	// Spring
+	springVersion = "5.2.6.RELEASE"
+
+	// Data conversion
+	jacksonVersion = "2.9.8"
+
+	// Other
+	lombokVersion = '1.18.12'
+
+	// Test
+	junitVersion = "5.6.2"
+}
+
 dependencies {
-	testCompile group: 'junit', name: 'junit', version: '4.12'
+	compile(
+			// Serial communication
+			"com.fazecast:jSerialComm:${jSerialCommVersion}",
+
+			// Logging
+			"org.slf4j:slf4j-api:${slf4jVersion}",
+
+			// Spring DI
+			"org.springframework:spring-core:${springVersion}",
+			"org.springframework:spring-context:${springVersion}",
+
+			// Data conversion
+			"com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}",
+
+			// Other
+			"org.projectlombok:lombok:${lombokVersion}"
+	)
+
+	annotationProcessor(
+			// Other
+			"org.projectlombok:lombok:${lombokVersion}"
+	)
+
+	runtime(
+			// LOGGING RUNTIME
+			"org.slf4j:jcl-over-slf4j:${slf4jVersion}",
+			"ch.qos.logback:logback-classic:${logbackVersion}"
+	)
+
+	testCompile(
+			"org.junit.jupiter:junit-jupiter-api:${junitVersion}",
+			"org.springframework:spring-test:${springVersion}"
+	)
 }
 
 javafx {

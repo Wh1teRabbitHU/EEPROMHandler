@@ -1,24 +1,31 @@
 package hu.thewhiterabbit.eeprom.handler;
 
-import javafx.application.Application;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
-import javafx.stage.Stage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
+import hu.thewhiterabbit.eeprom.handler.configuration.SpringConfiguration;
+import hu.thewhiterabbit.eeprom.handler.gui.stage.MainStage;
+import javafx.application.Application;
+import javafx.stage.Stage;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class EEPROMHandlerApplication extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		Label l = new Label("EEPROM Handler");
-		Scene scene = new Scene(new StackPane(l), 640, 480);
+		log.info("Starting application!");
 
-		stage.setScene(scene);
-		stage.show();
+		final ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+		final MainStage mainStage = ctx.getBean(MainStage.class);
+
+		mainStage.init();
 	}
 
 	public static void main(String[] args) {
-		launch();
+		launch(args);
 	}
 
 }
