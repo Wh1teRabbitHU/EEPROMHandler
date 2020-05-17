@@ -1,13 +1,11 @@
 package hu.thewhiterabbit.eeprom.handler.gui.stage;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Component;
 
-import hu.thewhiterabbit.eeprom.handler.service.eeprom.EepromService;
+import hu.thewhiterabbit.eeprom.handler.gui.container.MainContainer;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,19 +15,18 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class MainStage extends Stage {
 
-	private final EepromService eepromService;
+	private static final String TITLE = "EEPROM Handler";
+	private static final Integer SCENE_WIDTH = 640;
+	private static final Integer SCENE_HEIGHT = 640;
 
+	private final MainContainer mainContainer;
+
+	@PostConstruct
 	public void init() {
-		Label label = new Label("EEPROM Handler");
-		Button button = new Button("Fetch data");
-		Scene scene = new Scene(new FlowPane(label, button), 640, 480);
-
-		button.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> eepromService.readEeprom());
+		Scene scene = new Scene(mainContainer, SCENE_WIDTH, SCENE_HEIGHT);
 
 		this.setScene(scene);
-		this.setTitle("EEPROM Handler");
-		this.show();
+		this.setTitle(TITLE);
 	}
-
 
 }

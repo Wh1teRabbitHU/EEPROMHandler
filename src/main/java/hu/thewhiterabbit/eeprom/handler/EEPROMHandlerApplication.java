@@ -19,7 +19,7 @@ public class EEPROMHandlerApplication extends Application {
 		final ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfiguration.class);
 		final MainStage mainStage = ctx.getBean(MainStage.class);
 
-		mainStage.init();
+		mainStage.show();
 	}
 
 	public static void main(String[] args) {

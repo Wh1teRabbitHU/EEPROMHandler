@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class SerialCommunicationService {
+public class SerialPortService {
 
 	private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 

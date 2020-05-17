@@ -11,7 +11,7 @@ import com.fazecast.jSerialComm.SerialPort;
 
 import hu.thewhiterabbit.eeprom.handler.model.eeprom.Block;
 import hu.thewhiterabbit.eeprom.handler.model.eeprom.Eeprom;
-import hu.thewhiterabbit.eeprom.handler.service.common.SerialCommunicationService;
+import hu.thewhiterabbit.eeprom.handler.service.common.SerialPortService;
 import hu.thewhiterabbit.eeprom.handler.util.MathUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ public class EepromService {
 	private boolean initialised = false;
 	private final List<SerialPort> serialPorts = new ArrayList<>();
 
-	private final SerialCommunicationService serialCommunicationService;
+	private final SerialPortService serialPortService;
 
 	public void loadPorts() {
 		for (SerialPort serialPort : serialPorts) {
@@ -37,7 +37,7 @@ public class EepromService {
 		}
 
 		serialPorts.clear();
-		serialPorts.addAll(serialCommunicationService.getAvailablePorts());
+		serialPorts.addAll(serialPortService.getAvailablePorts());
 	}
 
 	public Optional<SerialPort> getPort(String systemPortName) { // cu.usbmodem142101
@@ -82,7 +82,7 @@ public class EepromService {
 	}
 
 	public void clearSerialInput(SerialPort serialPort) {
-		serialCommunicationService.read(serialPort);
+		serialPortService.read(serialPort);
 
 		try {
 			Thread.sleep(1000);
@@ -96,14 +96,14 @@ public class EepromService {
 
 		String addressString = MathUtil.paddedBinary(address, 5);
 
-		serialCommunicationService.write(serialPort, "r" + addressString);
+		serialPortService.write(serialPort, "r" + addressString);
 
 		String incomingData = null;
 
 		int tries = 0;
 
 		while (incomingData == null && tries < MAX_TRY) {
-			incomingData = serialCommunicationService.read(serialPort);
+			incomingData = serialPortService.read(serialPort);
 
 			if (incomingData == null) {
 				tries++;
