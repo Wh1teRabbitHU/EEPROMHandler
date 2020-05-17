@@ -8,10 +8,12 @@ import hu.thewhiterabbit.eeprom.handler.model.code.EepromType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @RequiredArgsConstructor
+@ToString
 public class Eeprom {
 
 	private final EepromType type;

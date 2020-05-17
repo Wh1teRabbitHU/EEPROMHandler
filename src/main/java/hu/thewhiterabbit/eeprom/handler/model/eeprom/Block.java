@@ -2,13 +2,15 @@ package hu.thewhiterabbit.eeprom.handler.model.eeprom;
 
 import java.util.Objects;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@ToString
+@AllArgsConstructor
 public class Block {
 
 	private final int address;
@@ -22,7 +24,7 @@ public class Block {
 		} else if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		
+
 		return address == ((Block) o).address;
 	}
 
