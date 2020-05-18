@@ -2,10 +2,12 @@ package hu.thewhiterabbit.eeprom.handler.gui.component.data;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import hu.thewhiterabbit.eeprom.handler.model.common.SimpleObservableList;
 import hu.thewhiterabbit.eeprom.handler.model.eeprom.Block;
+import hu.thewhiterabbit.eeprom.handler.state.event.BlockSetChangeEvent;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -34,6 +36,12 @@ public class DataTable extends TableView<Block> {
 		valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
 
 		getColumns().setAll(addressColumn, valueColumn);
+	}
+
+	@EventListener
+	public void handleBlockSetChange(BlockSetChangeEvent blockSetChangeEvent) {
+		blocks.clear();
+		blocks.addAll(blockSetChangeEvent.getBlocks());
 	}
 
 }

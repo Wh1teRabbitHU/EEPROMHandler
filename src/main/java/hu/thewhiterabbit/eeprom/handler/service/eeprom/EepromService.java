@@ -1,17 +1,17 @@
 package hu.thewhiterabbit.eeprom.handler.service.eeprom;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import org.springframework.stereotype.Service;
 
 import com.fazecast.jSerialComm.SerialPort;
 
 import hu.thewhiterabbit.eeprom.handler.model.eeprom.Block;
-import hu.thewhiterabbit.eeprom.handler.model.eeprom.Eeprom;
 import hu.thewhiterabbit.eeprom.handler.service.common.SerialPortService;
+import hu.thewhiterabbit.eeprom.handler.state.holder.DataStateHolder;
+import hu.thewhiterabbit.eeprom.handler.state.holder.SerialPortStateHolder;
 import hu.thewhiterabbit.eeprom.handler.util.MathUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,38 +21,36 @@ import lombok.extern.slf4j.Slf4j;
 @RequiredArgsConstructor
 public class EepromService {
 
-	private static final int MAX_TRY = 10;
+	private static final int MAX_TRY = 100;
 	private static final String ADDRESS_VALUE_SEPARATOR = "=";
 
+	private final DataStateHolder dataStateHolder;
 	private final SerialPortService serialPortService;
+	private final SerialPortStateHolder serialPortStateHolder;
 
-	public Eeprom readEeprom() {
-		Eeprom eeprom = Eeprom.AT28C64();
-		Optional<SerialPort> serialPortOptional = serialPortService.getPort("cu.usbmodem142101");
-
-		if (serialPortOptional.isEmpty()) {
-			log.warn("The selected port is not present!");
-
-			return eeprom;
-		}
-
-		SerialPort serialPort = serialPortOptional.get();
+	public void readEeprom() {
+		SerialPort serialPort = serialPortStateHolder.getCurrentSerialPort();
 
 		clearSerialInput(serialPort);
 
-		for (int i = 0; i < eeprom.getType().maxAddress; i++) {
+		Set<Block> blocks = new HashSet<>();
+		int failedRead = 0;
+
+		for (int i = 0; i < dataStateHolder.getEepromType().maxAddress; i++) {
 			Optional<Block> optionalBlock = readBlock(serialPort, i);
 
 			if (optionalBlock.isEmpty()) {
 				log.warn("Couldn't read the following address: {}", i);
+				failedRead++;
 			} else {
-				eeprom.addBlock(optionalBlock.get());
+				blocks.add(optionalBlock.get());
 			}
 		}
 
-		log.info("Successfully fetched eeprom: {}", eeprom);
+		log.info("Successfully finished reading data from the EEPROM! " +
+				 "Blocks: {}, failed reads: {}", blocks.size(), failedRead);
 
-		return eeprom;
+		dataStateHolder.changeBlocks(blocks);
 	}
 
 	public void clearSerialInput(SerialPort serialPort) {
@@ -66,7 +64,7 @@ public class EepromService {
 	}
 
 	public Optional<Block> readBlock(SerialPort serialPort, int address) {
-		log.debug("Reading the following address: {}", address);
+		log.trace("Reading the following address: {}", address);
 
 		String addressString = MathUtil.paddedBinary(address, 5);
 
@@ -83,7 +81,7 @@ public class EepromService {
 				tries++;
 
 				try {
-					Thread.sleep(10);
+					Thread.sleep(1);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}

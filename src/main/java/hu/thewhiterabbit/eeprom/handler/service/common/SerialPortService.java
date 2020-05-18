@@ -69,7 +69,7 @@ public class SerialPortService {
 			outputData.append(new String(readBuffer, DEFAULT_CHARSET));
 
 			try {
-				Thread.sleep(10);
+				Thread.sleep(5);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}

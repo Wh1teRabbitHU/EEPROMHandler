@@ -51,7 +51,7 @@ public class SerialPortConnectButton extends Button {
 	}
 
 	@EventListener
-	public void handleContextStart(SerialPortChangeEvent serialPortChangeEvent) {
+	public void handleSerialPortChange(SerialPortChangeEvent serialPortChangeEvent) {
 		serialPort = serialPortChangeEvent.getSerialPort();
 
 		updateStatus();
