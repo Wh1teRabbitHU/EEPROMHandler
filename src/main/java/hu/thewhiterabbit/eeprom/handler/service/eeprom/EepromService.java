@@ -24,37 +24,11 @@ public class EepromService {
 	private static final int MAX_TRY = 10;
 	private static final String ADDRESS_VALUE_SEPARATOR = "=";
 
-	private boolean initialised = false;
-	private final List<SerialPort> serialPorts = new ArrayList<>();
-
 	private final SerialPortService serialPortService;
-
-	public void loadPorts() {
-		for (SerialPort serialPort : serialPorts) {
-			if (serialPort.isOpen()) {
-				serialPort.closePort();
-			}
-		}
-
-		serialPorts.clear();
-		serialPorts.addAll(serialPortService.getAvailablePorts());
-	}
-
-	public Optional<SerialPort> getPort(String systemPortName) { // cu.usbmodem142101
-		if (!initialised) {
-			loadPorts();
-
-			initialised = true;
-		}
-
-		return serialPorts.stream()
-						  .filter(sp -> Objects.equals(sp.getSystemPortName(), systemPortName))
-						  .findFirst();
-	}
 
 	public Eeprom readEeprom() {
 		Eeprom eeprom = Eeprom.AT28C64();
-		Optional<SerialPort> serialPortOptional = getPort("cu.usbmodem142101");
+		Optional<SerialPort> serialPortOptional = serialPortService.getPort("cu.usbmodem142101");
 
 		if (serialPortOptional.isEmpty()) {
 			log.warn("The selected port is not present!");

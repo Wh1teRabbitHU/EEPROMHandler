@@ -3,9 +3,14 @@ package hu.thewhiterabbit.eeprom.handler.service.common;
 import java.io.PrintWriter;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Service;
 
@@ -19,9 +24,33 @@ public class SerialPortService {
 
 	private static final Charset DEFAULT_CHARSET = StandardCharsets.UTF_8;
 
+	private final List<SerialPort> serialPorts = new ArrayList<>();
+
+	@PostConstruct
+	public void init() {
+		loadPorts();
+	}
+
+	public void loadPorts() {
+		for (SerialPort serialPort : serialPorts) {
+			if (serialPort.isOpen()) {
+				serialPort.closePort();
+			}
+		}
+
+		serialPorts.clear();
+		serialPorts.addAll(getAvailablePorts());
+	}
+
 	public List<SerialPort> getAvailablePorts() {
 		return Stream.of(SerialPort.getCommPorts())
 					 .collect(Collectors.toList());
+	}
+
+	public Optional<SerialPort> getPort(String systemPortName) { // cu.usbmodem142101
+		return serialPorts.stream()
+						  .filter(sp -> Objects.equals(sp.getSystemPortName(), systemPortName))
+						  .findFirst();
 	}
 
 	public String read(SerialPort serialPort) {

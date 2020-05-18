@@ -5,6 +5,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 
 import hu.thewhiterabbit.eeprom.handler.configuration.SpringConfiguration;
 import hu.thewhiterabbit.eeprom.handler.gui.stage.MainStage;
+import hu.thewhiterabbit.eeprom.handler.service.common.StateService;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.extern.slf4j.Slf4j;
@@ -18,8 +19,14 @@ public class EEPROMHandlerApplication extends Application {
 
 		final ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfiguration.class);
 		final MainStage mainStage = ctx.getBean(MainStage.class);
+		final StateService stateService = ctx.getBean(StateService.class);
 
 		mainStage.show();
+		mainStage.setOnCloseRequest(event -> {
+			log.info("Closing application...");
+
+			stateService.cleanUpOnClose();
+		});
 	}
 
 	public static void main(String[] args) {
