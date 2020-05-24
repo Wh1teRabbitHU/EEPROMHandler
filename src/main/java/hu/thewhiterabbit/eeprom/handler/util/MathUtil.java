@@ -81,4 +81,12 @@ public final class MathUtil {
 		return new String(data, DEFAULT_CHARSET);
 	}
 
+	public static int calculatePercentage(int current, int max) {
+		if (current == 0) {
+			return 0;
+		}
+
+		return current * 100 / max;
+	}
+
 }

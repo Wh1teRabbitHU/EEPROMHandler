@@ -13,11 +13,13 @@ public class MainContainer extends BorderPane {
 
 	private final MainControlContainer mainControlContainer;
 	private final DataContainer dataContainer;
+	private final StatusBarContainer statusBarContainer;
 
 	@PostConstruct
 	public void init() {
 		setTop(mainControlContainer);
 		setCenter(dataContainer);
+		setBottom(statusBarContainer);
 	}
 
 }
