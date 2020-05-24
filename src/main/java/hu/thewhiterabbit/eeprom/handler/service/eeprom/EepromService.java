@@ -2,6 +2,7 @@ package hu.thewhiterabbit.eeprom.handler.service.eeprom;
 
 import java.util.Optional;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.fazecast.jSerialComm.SerialPort;
@@ -28,6 +29,7 @@ public class EepromService {
 	private final SerialPortService serialPortService;
 	private final SerialPortStateHolder serialPortStateHolder;
 
+	@Async
 	public void readEeprom() {
 		SerialPort serialPort = serialPortStateHolder.getCurrentSerialPort();
 
@@ -55,6 +57,7 @@ public class EepromService {
 		eepromStateHolder.changeEeprom(eeprom);
 	}
 
+	@Async
 	public void clearSerialInput(SerialPort serialPort) {
 		serialPortService.read(serialPort);
 
@@ -65,6 +68,7 @@ public class EepromService {
 		}
 	}
 
+	@Async
 	public Optional<Block> readBlock(SerialPort serialPort, int address) {
 		log.trace("Reading the following address: {}", address);
 
