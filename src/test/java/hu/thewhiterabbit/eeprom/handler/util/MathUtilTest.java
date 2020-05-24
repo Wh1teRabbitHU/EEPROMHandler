@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 class MathUtilTest {
 
-	static Stream<Arguments> paddedBinaryProvider() {
+	static Stream<Arguments> paddedNumberProvider() {
 		return Stream.of(
 				Arguments.arguments(0, 5, "00000"),
 				Arguments.arguments(12, 5, "00012"),
@@ -22,10 +22,10 @@ class MathUtilTest {
 		);
 	}
 
-	@MethodSource("paddedBinaryProvider")
+	@MethodSource("paddedNumberProvider")
 	@ParameterizedTest
-	void paddedBinary(Integer number, Integer padding, String expectedOutcome) {
-		String outcome = MathUtil.paddedBinary(number, padding);
+	void paddedNumber(Integer number, Integer padding, String expectedOutcome) {
+		String outcome = MathUtil.paddedNumber(number, padding);
 
 		Assertions.assertEquals(expectedOutcome, outcome);
 	}

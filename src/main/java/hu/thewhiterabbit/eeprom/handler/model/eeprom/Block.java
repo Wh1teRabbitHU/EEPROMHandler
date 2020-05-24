@@ -2,6 +2,7 @@ package hu.thewhiterabbit.eeprom.handler.model.eeprom;
 
 import java.util.Objects;
 
+import hu.thewhiterabbit.eeprom.handler.util.MathUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,6 +32,22 @@ public class Block {
 	@Override
 	public int hashCode() {
 		return Objects.hash(address);
+	}
+
+	public String hexAddress() {
+		return MathUtil.getHex(address);
+	}
+
+	public String hexValue() {
+		return MathUtil.getHex(value);
+	}
+
+	public String byteValue() {
+		return MathUtil.getByteString(this.value);
+	}
+
+	public void copyBlock(Block block) {
+		this.value = block.getValue();
 	}
 
 }

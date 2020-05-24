@@ -1,45 +1,51 @@
 package hu.thewhiterabbit.eeprom.handler.model.eeprom;
 
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.Set;
 
 import hu.thewhiterabbit.eeprom.handler.model.code.EepromType;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
 @ToString
 public class Eeprom {
 
 	private final EepromType type;
 
-	private final Set<Block> blocks = new HashSet<>();
+	private final Set<Sector> sectors = new LinkedHashSet<>();
+
+	public Eeprom(final EepromType type) {
+		this.type = type;
+
+		for (int address = 0; address < type.maxAddress; address += Sector.RANGE_SIZE) {
+			sectors.add(new Sector(address));
+		}
+	}
 
 	public Optional<Block> getBlock(int address) {
-		return blocks.stream()
-					 .filter(block -> block.getAddress() == address)
-					 .findFirst();
-	}
+		Optional<Sector> sector = sectors.stream()
+										 .filter(s -> s.getBlock(address)
+													   .isPresent())
+										 .findFirst();
 
-	public void addBlock(Block block) {
-		if (blocks.contains(block)) {
-			return;
+		if (sector.isEmpty()) {
+			return Optional.empty();
 		}
 
-		blocks.add(block);
+		return sector.get()
+					 .getBlock(address);
 	}
 
-	public static Eeprom AT28C64() {
-		return new Eeprom(EepromType.AT28C64);
+	public void updateBlock(int address, int value) {
+		getBlock(address).ifPresent(b -> b.setValue(value));
 	}
 
-	public static Eeprom AT28C256() {
-		return new Eeprom(EepromType.AT28C256);
+	public void updateBlock(int address, Block block) {
+		getBlock(address).ifPresent(b -> b.copyBlock(block));
 	}
 
 }
