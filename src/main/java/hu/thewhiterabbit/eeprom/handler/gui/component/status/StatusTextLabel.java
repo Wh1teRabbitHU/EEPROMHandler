@@ -19,7 +19,7 @@ public class StatusTextLabel extends Label {
 
 	@EventListener
 	public void handleStatusTextChange(StatusTextChangeEvent statusTextChangeEvent) {
-		Platform.runLater(() -> setText(statusTextChangeEvent.getStatustext()));
+		Platform.runLater(() -> setText(statusTextChangeEvent.getChangedData()));
 	}
 
 }

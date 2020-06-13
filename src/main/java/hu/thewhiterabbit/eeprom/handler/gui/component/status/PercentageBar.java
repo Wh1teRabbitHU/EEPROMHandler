@@ -21,7 +21,7 @@ public class PercentageBar extends ProgressBar {
 
 	@EventListener
 	public void handlePercentageChange(PercentageChangeEvent percentageChangeEvent) {
-		int percentage = percentageChangeEvent.getPercentage();
+		int percentage = percentageChangeEvent.getChangedData();
 
 		setProgress(percentage / 100f);
 		toggleBar(percentage != 100);

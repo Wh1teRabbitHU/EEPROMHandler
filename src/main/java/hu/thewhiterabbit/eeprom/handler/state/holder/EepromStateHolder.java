@@ -17,7 +17,7 @@ public class EepromStateHolder {
 
 	private final ApplicationEventPublisher applicationEventPublisher;
 
-	private EepromType eepromType;
+	private EepromType eepromType = EepromType.TEST;
 	private Eeprom eeprom;
 
 	public void changeEeprom(Eeprom eeprom) {

@@ -21,7 +21,7 @@ public class EepromTypeComboBox extends ComboBox<EepromType> {
 	@PostConstruct
 	public void init() {
 		setItems(new SimpleObservableList<>(Arrays.asList(EepromType.values())));
-		setValue(EepromType.TEST);
+		setValue(eepromStateHolder.getEepromType());
 
 		valueProperty().addListener((obs, oldSp, eepromType) -> eepromStateHolder.changeEepromType(eepromType));
 	}

@@ -59,7 +59,7 @@ public class DataTable extends TableView<Sector> {
 
 	@EventListener
 	public void handleBlockSetChange(EepromChangeEvent eepromChangeEvent) {
-		Eeprom eeprom = eepromChangeEvent.getEeprom();
+		Eeprom eeprom = eepromChangeEvent.getChangedData();
 
 		sectors.clear();
 

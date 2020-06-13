@@ -1,18 +1,9 @@
 package hu.thewhiterabbit.eeprom.handler.state.event;
 
-import org.springframework.context.ApplicationEvent;
+public class PercentageChangeEvent extends BaseChangeEvent<Integer> {
 
-import lombok.Getter;
-
-@Getter
-public class PercentageChangeEvent extends ApplicationEvent {
-
-	private final int percentage;
-
-	public PercentageChangeEvent(final Object source, final int percentage) {
-		super(source);
-
-		this.percentage = percentage;
+	public PercentageChangeEvent(final Object source, final Integer changedData) {
+		super(source, changedData);
 	}
 
 }

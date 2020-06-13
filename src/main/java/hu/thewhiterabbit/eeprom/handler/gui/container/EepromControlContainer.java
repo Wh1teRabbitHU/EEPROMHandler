@@ -11,6 +11,7 @@ import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ExportEepro
 import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ImportEepromDataButton;
 import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.NewEepromDataButton;
 import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ReadEepromDataButton;
+import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.WriteEepromDataButton;
 import hu.thewhiterabbit.eeprom.handler.util.GuiUtil;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -25,6 +26,7 @@ public class EepromControlContainer extends HBox {
 	private final EepromTypeComboBox eepromTypeComboBox;
 	private final NewEepromDataButton newEepromDataButton;
 	private final ReadEepromDataButton readEepromDataButton;
+	private final WriteEepromDataButton writeEepromDataButton;
 	private final ImportEepromDataButton importEepromDataButton;
 	private final ExportEepromDataButton exportEepromDataButton;
 	private final CloseEepromDataButton closeEepromDataButton;
@@ -32,7 +34,8 @@ public class EepromControlContainer extends HBox {
 	@PostConstruct
 	public void init() {
 		getChildren().addAll(eepromControlLabel, eepromTypeComboBox, newEepromDataButton, readEepromDataButton,
-							 importEepromDataButton, exportEepromDataButton, closeEepromDataButton);
+							 writeEepromDataButton, importEepromDataButton, exportEepromDataButton,
+							 closeEepromDataButton);
 
 		setAlignment(Pos.CENTER_LEFT);
 		setPadding(GuiUtil.CONTAINER_PADDING);
