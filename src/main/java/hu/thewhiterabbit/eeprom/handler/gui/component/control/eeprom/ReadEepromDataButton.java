@@ -4,22 +4,22 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-import hu.thewhiterabbit.eeprom.handler.service.eeprom.EepromService;
+import hu.thewhiterabbit.eeprom.handler.service.eeprom.EepromDataService;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import lombok.RequiredArgsConstructor;
 
 @Component
 @RequiredArgsConstructor
-public class ReadDataButton extends Button {
+public class ReadEepromDataButton extends Button {
 
-	private final EepromService eepromService;
+	private final EepromDataService eepromDataService;
 
 	@PostConstruct
 	public void init() {
-		setText("Read from EEPROM");
+		setText("Read");
 
-		addEventHandler(MouseEvent.MOUSE_CLICKED, event -> eepromService.readEeprom());
+		addEventHandler(MouseEvent.MOUSE_CLICKED, event -> eepromDataService.readEepromData());
 	}
 
 }

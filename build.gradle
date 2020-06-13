@@ -79,9 +79,9 @@ test {
 	useJUnitPlatform()
 }
 
+mainClassName = 'hu.thewhiterabbit.eeprom.handler.EEPROMHandlerApplication'
+
 javafx {
 	version = "14.0.1"
 	modules = ['javafx.controls']
 }
-
-mainClassName = 'hu.thewhiterabbit.eeprom.handler.EEPROMHandlerApplication'

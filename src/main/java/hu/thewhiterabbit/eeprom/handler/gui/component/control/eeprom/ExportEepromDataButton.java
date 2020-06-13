@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import javafx.scene.control.Button;
 
 @Component
-public class ExportDataButton extends Button {
+public class ExportEepromDataButton extends Button {
 
 	@PostConstruct
 	public void init() {

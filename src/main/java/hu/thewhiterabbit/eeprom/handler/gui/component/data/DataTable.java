@@ -9,6 +9,7 @@ import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
 
 import hu.thewhiterabbit.eeprom.handler.model.common.SimpleObservableList;
+import hu.thewhiterabbit.eeprom.handler.model.eeprom.Eeprom;
 import hu.thewhiterabbit.eeprom.handler.model.eeprom.Sector;
 import hu.thewhiterabbit.eeprom.handler.state.event.EepromChangeEvent;
 import hu.thewhiterabbit.eeprom.handler.util.MathUtil;
@@ -58,9 +59,13 @@ public class DataTable extends TableView<Sector> {
 
 	@EventListener
 	public void handleBlockSetChange(EepromChangeEvent eepromChangeEvent) {
+		Eeprom eeprom = eepromChangeEvent.getEeprom();
+
 		sectors.clear();
-		sectors.addAll(eepromChangeEvent.getEeprom()
-										.getSectors());
+
+		if (eeprom != null) {
+			sectors.addAll(eeprom.getSectors());
+		}
 	}
 
 }

@@ -4,10 +4,13 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
+import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.CloseEepromDataButton;
 import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.EepromControlLabel;
-import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ExportDataButton;
-import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ReadDataButton;
-import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ImportDataButton;
+import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.EepromTypeComboBox;
+import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ExportEepromDataButton;
+import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ImportEepromDataButton;
+import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.NewEepromDataButton;
+import hu.thewhiterabbit.eeprom.handler.gui.component.control.eeprom.ReadEepromDataButton;
 import hu.thewhiterabbit.eeprom.handler.util.GuiUtil;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -19,13 +22,17 @@ import lombok.RequiredArgsConstructor;
 public class EepromControlContainer extends HBox {
 
 	private final EepromControlLabel eepromControlLabel;
-	private final ReadDataButton readDataButton;
-	private final ImportDataButton importDataButton;
-	private final ExportDataButton exportDataButton;
+	private final EepromTypeComboBox eepromTypeComboBox;
+	private final NewEepromDataButton newEepromDataButton;
+	private final ReadEepromDataButton readEepromDataButton;
+	private final ImportEepromDataButton importEepromDataButton;
+	private final ExportEepromDataButton exportEepromDataButton;
+	private final CloseEepromDataButton closeEepromDataButton;
 
 	@PostConstruct
 	public void init() {
-		getChildren().addAll(eepromControlLabel, readDataButton, importDataButton, exportDataButton);
+		getChildren().addAll(eepromControlLabel, eepromTypeComboBox, newEepromDataButton, readEepromDataButton,
+							 importEepromDataButton, exportEepromDataButton, closeEepromDataButton);
 
 		setAlignment(Pos.CENTER_LEFT);
 		setPadding(GuiUtil.CONTAINER_PADDING);
