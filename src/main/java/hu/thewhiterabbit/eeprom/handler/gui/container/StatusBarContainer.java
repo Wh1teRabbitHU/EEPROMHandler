@@ -4,8 +4,8 @@ import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
 
-import hu.thewhiterabbit.eeprom.handler.gui.component.status.PercentageBar;
-import hu.thewhiterabbit.eeprom.handler.gui.component.status.StatusTextLabel;
+import hu.thewhiterabbit.eeprom.handler.gui.component.common.PercentageBar;
+import hu.thewhiterabbit.eeprom.handler.gui.component.common.StatusTextLabel;
 import javafx.geometry.Pos;
 import javafx.scene.layout.HBox;
 import lombok.RequiredArgsConstructor;

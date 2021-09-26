@@ -5,11 +5,9 @@ import org.springframework.stereotype.Component;
 import hu.thewhiterabbit.eeprom.handler.state.event.PercentageChangeEvent;
 import hu.thewhiterabbit.eeprom.handler.state.event.StatusTextChangeEvent;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @Component
-@RequiredArgsConstructor
 public class StatusBarStateHolder extends BaseStateHolder {
 
 	private int percentage;

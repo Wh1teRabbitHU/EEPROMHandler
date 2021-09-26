@@ -1,4 +1,4 @@
-package hu.thewhiterabbit.eeprom.handler.gui.component.status;
+package hu.thewhiterabbit.eeprom.handler.gui.component.common;
 
 import javax.annotation.PostConstruct;
 

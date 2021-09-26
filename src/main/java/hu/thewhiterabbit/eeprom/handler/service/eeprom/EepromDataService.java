@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.fazecast.jSerialComm.SerialPort;
 
+import hu.thewhiterabbit.eeprom.handler.gui.component.common.AlertWindow;
 import hu.thewhiterabbit.eeprom.handler.model.eeprom.Block;
 import hu.thewhiterabbit.eeprom.handler.model.eeprom.Eeprom;
 import hu.thewhiterabbit.eeprom.handler.state.holder.EepromStateHolder;
@@ -27,9 +28,13 @@ public class EepromDataService {
 	private final EepromStateHolder eepromStateHolder;
 	private final SerialPortStateHolder serialPortStateHolder;
 
+	private final AlertWindow alertWindow;
+
 	@Async
 	public void newEepromData() {
 		Eeprom eeprom = new Eeprom(eepromStateHolder.getEepromType());
+
+		alertWindow.openWindow(null);
 
 		eepromStateHolder.changeEeprom(eeprom);
 	}
